@@ -13,6 +13,7 @@
   import { isLoggedIn, user } from 'src/stores/auth'
   import { message, snackbar, type } from 'src/stores/snackbar'
   import NavMenuItem from './NavMenuItem.svelte'
+
   export let active
 
   const dispatch = createEventDispatcher()

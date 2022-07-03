@@ -13,13 +13,10 @@ const storage = <T>(key: string, initValue: T): Writable<T> => {
   const store = writable(initValue)
 
   const storedValueStr = localStorage.getItem(key)
-  console.log(storedValueStr)
 
   if (storedValueStr != null) store.set(JSON.parse(storedValueStr))
 
   store.subscribe((val) => {
-    console.log(`Storing ${key}`, val)
-
     if ([null, undefined].includes(val)) {
       localStorage.removeItem(key)
     } else {

@@ -6,6 +6,7 @@
   import EmailField from 'components/field/EmailField.svelte'
   import PasswordField from 'components/field/PasswordField.svelte'
   import { login } from 'services/auth'
+  import Center from 'src/components/layout/Center.svelte'
   import type { Page } from 'src/interfaces/model/Page'
   import type { User } from 'src/interfaces/model/User'
   import { user } from 'src/stores/auth'
@@ -42,24 +43,26 @@
 
 <svelte:window on:keyup={(e) => !invalid && handleEnter(e)} />
 
-<Card title="LOGIN">
-  <CardText>
-    <div class="d-flex justify-space-between flex-column">
-      <EmailField bind:email bind:error />
-      <PasswordField
-        bind:password
-        bind:error
-        forgotPassword={true}
-        forgotRedirect={'password-reset'}
-      />
-      <CardActions class="d-flex justify-center">
-        <Button on:click={log} disabled={invalid}>Login</Button>
-      </CardActions>
-      <CardActions class="d-flex justify-center">
-        <Link class="text-center text-decoration-none pointer" to="register">
-          Don't have account yet?
-        </Link>
-      </CardActions>
-    </div>
-  </CardText>
-</Card>
+<Center>
+  <Card title="LOGIN">
+    <CardText>
+      <div class="d-flex justify-space-between flex-column">
+        <EmailField bind:email bind:error />
+        <PasswordField
+          bind:password
+          bind:error
+          forgotPassword={true}
+          forgotRedirect={'password-reset'}
+        />
+        <CardActions class="d-flex justify-center">
+          <Button on:click={log} disabled={invalid}>Login</Button>
+        </CardActions>
+        <CardActions class="d-flex justify-center">
+          <Link class="text-center text-decoration-none pointer" to="/register">
+            Don't have account yet?
+          </Link>
+        </CardActions>
+      </div>
+    </CardText>
+  </Card>
+</Center>

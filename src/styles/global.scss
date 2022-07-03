@@ -42,4 +42,6 @@ a {
 .s-app {
   display: flex !important;
   flex-direction: column !important;
+  height: inherit;
+  align-content: stretch;
 }
