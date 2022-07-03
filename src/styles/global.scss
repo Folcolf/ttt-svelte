@@ -1,9 +1,28 @@
 @import '../theme/_material-theme.scss';
 
-* { padding: 0; margin: 0; }
-html, body, #app {
-    min-height: 100% !important;
-    height: 100%;
+* {
+  padding: 0;
+  margin: 0;
+}
+html,
+body,
+#app {
+  min-height: 100% !important;
+  height: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 .pointer {
@@ -13,10 +32,9 @@ html, body, #app {
   &:hover {
     opacity: 0.5;
   }
-
 }
 
-.aside-modal{
+.aside-modal {
   padding-top: 48px;
   height: 100%;
 }

@@ -1,9 +1,8 @@
-<script>
+<script lang="ts">
   import { Snackbar } from 'svelte-materialify/src'
+  import { fly } from 'svelte/transition'
 
-  export let snackbar = false
-  export let snackbarMessage = ''
-  export let snackbarType = 'info'
+  import { snackbar, message, type } from 'src/stores/snackbar'
 
   const getClass = (type) => {
     switch (type) {
@@ -19,29 +18,30 @@
   }
 </script>
 
-<main>
+<main
+  in:fly={{ y: -50, duration: 250, delay: 300 }}
+  out:fly={{ y: -50, duration: 250 }}
+>
   <slot />
 </main>
 
-{#if snackbar}
+{#if $snackbar}
   <Snackbar
-    class={getClass(snackbarType) + ' flex-column'}
+    class={getClass($type) + ' flex-column'}
     bottom
     center
     timeout={2000}
-    bind:active={snackbar}
+    bind:active={$snackbar}
   >
-    {snackbarMessage}
+    {$message}
   </Snackbar>
 {/if}
 
 <style scoped lang="scss">
   main {
-    margin: 10% auto;
     height: 100% !important;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
   }
 </style>

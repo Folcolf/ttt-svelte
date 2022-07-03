@@ -1,55 +1,68 @@
 import type { Pagination } from 'interfaces/Pagination'
+import { fetchTimeout } from 'src/services/utils'
+import { options } from './utils'
 
+/**
+ * Find all games with pagination
+ *
+ * @param {Pagination} { page, limit }
+ * @return {*}  {Promise<Response>}
+ */
 const find = ({ page, limit }: Pagination): Promise<Response> => {
-  return fetch(`/api/games?page=${page}&limit=${limit}`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  return fetchTimeout(
+    `/api/games?page=${page}&limit=${limit}`,
+    options('GET', undefined)
+  )
 }
 
+/**
+ * Count all games
+ *
+ * @return {*}  {Promise<Response>}
+ */
+const count = (): Promise<Response> => {
+  return fetchTimeout('/api/games/count', options('GET', undefined))
+}
+
+/**
+ * Get game by id
+ *
+ * @param {string} id
+ * @return {*}  {Promise<Response>}
+ */
 const getById = (id: string): Promise<Response> => {
-  return fetch(`/api/games/${id}`, {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  return fetchTimeout(`/api/games/${id}`, options('GET', undefined))
 }
 
+/**
+ * Create new game
+ *
+ * @param {unknown} body
+ * @return {*}  {Promise<Response>}
+ */
 const create = (body: unknown): Promise<Response> => {
-  return fetch('/api/games', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  })
+  return fetchTimeout('/api/games', options('POST', body))
 }
 
+/**
+ * Update game by id
+ *
+ * @param {string} id
+ * @param {unknown} body
+ * @return {*}  {Promise<Response>}
+ */
 const update = (id: string, body: unknown): Promise<Response> => {
-  return fetch(`/api/games/${id}`, {
-    method: 'PUT',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  })
+  return fetchTimeout(`/api/games/${id}`, options('PUT', body))
 }
 
+/**
+ * Delete game by id
+ *
+ * @param {string} id
+ * @return {*}  {Promise<Response>}
+ */
 const remove = (id: string): Promise<Response> => {
-  return fetch(`/api/games/${id}`, {
-    method: 'DELETE',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  return fetchTimeout(`/api/games/${id}`, options('DELETE', undefined))
 }
 
-export { find, getById, create, update, remove }
+export { find, count, getById, create, update, remove }

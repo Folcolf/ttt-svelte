@@ -7,6 +7,7 @@
   const emailRules = [
     (v) => !!v || 'Required',
     (v) => v.length <= 25 || 'Max 25 characters',
+    (v) => /^\S+@\S+\.\S+$/.test(v) || 'Invalid email address',
   ]
 </script>
 

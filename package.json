@@ -24,7 +24,7 @@
     "vite": "^2.9.13"
   },
   "dependencies": {
-    "@mdi/js": "^6.7.96",
+    "@mdi/js": "^6.9.96",
     "@vitejs/plugin-legacy": "^1.8.2",
     "svelte-navigator": "^3.1.6"
   }

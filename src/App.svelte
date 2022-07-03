@@ -3,20 +3,25 @@
   import { Route, Router } from 'svelte-navigator'
 
   import { routes } from './routes/index'
-  import NotFound from './routes/NotFound.svelte'
   import { theme } from './stores/theme'
+  import NotFound from './views/NotFound.svelte'
 
+  import Top from 'components/layout/Top.svelte'
+  import PrivateRoute from 'components/route/private/PrivateRoute.svelte'
   import './styles/global.scss'
 </script>
 
 <MaterialApp theme={$theme}>
   <Router>
-    {#each routes as route}
-      <Route path={route.path} component={route.component} />
-    {/each}
-    <Route path="*" component={NotFound} />
+    <Top>
+      {#each routes as { path, component, meta }}
+        {#if meta.private !== true}
+          <Route {path} {component} let:params let:location />
+        {:else}
+          <PrivateRoute {path} {component} let:params let:location />
+        {/if}
+      {/each}
+      <Route path="*" component={NotFound} />
+    </Top>
   </Router>
 </MaterialApp>
-
-<style global lang="scss">
-</style>

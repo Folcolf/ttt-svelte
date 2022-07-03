@@ -1,47 +1,64 @@
-import { manageErrors } from 'src/utils/error'
+import type { Page } from 'src/interfaces/model/Page'
+import type { User } from 'src/interfaces/model/User'
+import {
+  fetchTimeout,
+  manageErrors,
+  manageResponse,
+  options,
+} from 'src/services/utils'
 
-const URL = 'http://localhost:8080'
-
-const login = (email, password): Promise<Response> => {
-  return fetch(URL + '/api/auth/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  }).then(manageErrors)
+/**
+ * Login with email and password
+ *
+ * @param {string} email
+ * @param {string} password
+ * @return {*}  {Promise<Page<User>>}
+ */
+const login = (email: string, password: string): Promise<Page<User>> => {
+  return fetchTimeout('/api/auth/login', options('POST', { email, password }))
+    .then(manageResponse)
+    .catch(manageErrors)
 }
 
-const register = (email, name, password): Promise<Response> => {
-  return fetch('/api/auth/register', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, name, password }),
-  }).then(manageErrors)
+/**
+ * Register the user with email and password
+ *
+ * @param {string} email
+ * @param {string} name
+ * @param {string} password
+ * @return {*}  {Promise<Page<User>>}
+ */
+const register = (
+  email: string,
+  name: string,
+  password: string
+): Promise<Page<User>> => {
+  return fetchTimeout(
+    '/api/auth/register',
+    options('POST', { email, name, password })
+  ).then(manageResponse)
 }
 
-const logout = (): Promise<Response> => {
-  return fetch('/api/auth/logout', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(manageErrors)
+/**
+ * Logout the user
+ *
+ * @return {*}  {Promise<Page<User>>}
+ */
+const logout = (): Promise<Page<User>> => {
+  return fetchTimeout('/api/auth/logout', options('POST', undefined)).then(
+    manageResponse
+  )
 }
 
-const isLogged = (): Promise<Response> => {
-  return fetch('/api/auth/logged', {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then(manageErrors)
+/**
+ * Get the user
+ *
+ * @return {*}  {Promise<Page<User>>}
+ */
+const isLogged = (): Promise<Page<User>> => {
+  return fetchTimeout('/api/auth/logged', options('GET', undefined)).then(
+    manageResponse
+  )
 }
 
 export { login, register, logout, isLogged }

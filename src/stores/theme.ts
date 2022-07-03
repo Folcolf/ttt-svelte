@@ -1,7 +1,5 @@
-import { writable } from 'svelte/store'
+import storage from './index'
 
-const storedTheme = localStorage.getItem('theme')
-export const theme = writable(storedTheme)
-theme.subscribe((value) => {
-  localStorage.setItem('theme', value === 'dark' ? 'dark' : 'light')
-})
+type Theme = 'light' | 'dark'
+
+export const theme = storage<Theme>('theme', 'light')
