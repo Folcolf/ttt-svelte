@@ -1,11 +1,11 @@
-import type { Page } from 'src/interfaces/model/Page'
-import type { User } from 'src/interfaces/model/User'
+import type { Page } from 'interfaces/model/Page'
+import type { User } from 'interfaces/model/User'
 import {
   fetchTimeout,
   manageErrors,
   manageResponse,
   options,
-} from 'src/services/utils'
+} from 'services/utils'
 
 /**
  * Login with email and password

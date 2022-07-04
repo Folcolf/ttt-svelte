@@ -2,7 +2,8 @@
   import { mdiBrightness4, mdiMenu } from '@mdi/js'
   import { AppBar, Button, Icon } from 'svelte-materialify/src'
   import { navigate } from 'svelte-navigator'
-  import { theme } from '../../stores/theme'
+
+  import { theme } from 'stores/theme'
   import NavMenu from './menu/NavMenu.svelte'
 
   let active = false

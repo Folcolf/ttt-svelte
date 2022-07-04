@@ -1,5 +1,5 @@
 import type { Pagination } from 'interfaces/Pagination'
-import { fetchTimeout, options } from 'src/services/utils'
+import { fetchTimeout, options } from 'services/utils'
 
 /**
  * Find all users with pagination

@@ -9,8 +9,8 @@
   import Center from 'src/components/layout/Center.svelte'
   import type { Page } from 'src/interfaces/model/Page'
   import type { User } from 'src/interfaces/model/User'
-  import { user } from 'src/stores/auth'
-  import { message, snackbar, type } from 'src/stores/snackbar'
+  import { user } from 'stores/auth'
+  import { message, snackbar, type } from 'stores/snackbar'
 
   $: email = ''
   $: password = ''

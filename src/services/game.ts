@@ -1,5 +1,5 @@
 import type { Pagination } from 'interfaces/Pagination'
-import { fetchTimeout } from 'src/services/utils'
+import { fetchTimeout } from 'services/utils'
 import { options } from './utils'
 
 /**

@@ -1,3 +1,5 @@
+const error = Error('Sorry, an error has occurred. Please try again later.')
+
 /**
  * Create new request init for fetch
  *
@@ -41,7 +43,7 @@ const fetchTimeout = (
 ): Promise<Response> => {
   return new Promise((resolve, reject) => {
     const timeoutId = setTimeout(() => {
-      reject(new Error('timeout'))
+      reject(error)
     }, timeout)
 
     fetch(url, options)
@@ -60,8 +62,10 @@ const fetchTimeout = (
  * @return {*}
  */
 const manageResponse = (response: Response) => {
+  console.debug(response)
+
   if (!response.ok) {
-    throw Error('Sorry, an error has occurred. Please try again later.')
+    throw error
   }
   return response.json()
 }
@@ -72,7 +76,8 @@ const manageResponse = (response: Response) => {
  * @param {Error} error
  */
 const manageErrors = (error: Error) => {
-  throw Error('Sorry, an error has occurred. Please try again later.')
+  console.error(error)
+  throw error
 }
 
 export { options, fetchTimeout }

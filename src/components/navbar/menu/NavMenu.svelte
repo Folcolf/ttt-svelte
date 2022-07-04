@@ -8,10 +8,10 @@
   } from 'svelte-materialify/src'
   import { navigate } from 'svelte-navigator'
 
+  import { logout } from 'services/auth'
   import { routes } from 'src/routes'
-  import { logout } from 'src/services/auth'
-  import { isLoggedIn, user } from 'src/stores/auth'
-  import { message, snackbar, type } from 'src/stores/snackbar'
+  import { isLoggedIn, user } from 'stores/auth'
+  import { message, snackbar, type } from 'stores/snackbar'
   import NavMenuItem from './NavMenuItem.svelte'
 
   export let active

@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Button } from 'svelte-materialify/src'
   import { navigate } from 'svelte-navigator'
-  import Center from '../components/layout/Center.svelte'
+
+  import Center from 'components/layout/Center.svelte'
 </script>
 
 <Center>

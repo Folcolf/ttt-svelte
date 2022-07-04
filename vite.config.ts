@@ -17,6 +17,8 @@ export default defineConfig({
       components: '/src/components',
       interfaces: '/src/interfaces',
       services: '/src/services',
+      stores: 'src/stores',
+      views: 'src/views',
     },
   },
   server: {
