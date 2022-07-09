@@ -2,6 +2,8 @@ import type { Pagination } from 'interfaces/Pagination'
 import { fetchTimeout } from 'services/utils'
 import { options } from './utils'
 
+const ROOT = '/api/games'
+
 /**
  * Find all games with pagination
  *
@@ -10,7 +12,7 @@ import { options } from './utils'
  */
 const find = ({ page, limit }: Pagination): Promise<Response> => {
   return fetchTimeout(
-    `/api/games?page=${page}&limit=${limit}`,
+    `${ROOT}?page=${page}&limit=${limit}`,
     options('GET', undefined)
   )
 }
@@ -21,7 +23,17 @@ const find = ({ page, limit }: Pagination): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const count = (): Promise<Response> => {
-  return fetchTimeout('/api/games/count', options('GET', undefined))
+  return fetchTimeout(`${ROOT}/count`, options('GET', undefined))
+}
+
+/**
+ * Count games by user id
+ *
+ * @param {string} id
+ * @return {*}  {Promise<Response>}
+ */
+const countByUser = (id: string): Promise<Response> => {
+  return fetchTimeout(`${ROOT}/count/${id}`, options('GET', undefined))
 }
 
 /**
@@ -31,7 +43,7 @@ const count = (): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const getById = (id: string): Promise<Response> => {
-  return fetchTimeout(`/api/games/${id}`, options('GET', undefined))
+  return fetchTimeout(`${ROOT}/${id}`, options('GET', undefined))
 }
 
 /**
@@ -41,7 +53,7 @@ const getById = (id: string): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const create = (body: unknown): Promise<Response> => {
-  return fetchTimeout('/api/games', options('POST', body))
+  return fetchTimeout(ROOT, options('POST', body))
 }
 
 /**
@@ -52,7 +64,7 @@ const create = (body: unknown): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const update = (id: string, body: unknown): Promise<Response> => {
-  return fetchTimeout(`/api/games/${id}`, options('PUT', body))
+  return fetchTimeout(`${ROOT}/${id}`, options('PUT', body))
 }
 
 /**
@@ -62,7 +74,7 @@ const update = (id: string, body: unknown): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const remove = (id: string): Promise<Response> => {
-  return fetchTimeout(`/api/games/${id}`, options('DELETE', undefined))
+  return fetchTimeout(`${ROOT}/${id}`, options('DELETE', undefined))
 }
 
-export { find, count, getById, create, update, remove }
+export { find, count, countByUser, getById, create, update, remove }
