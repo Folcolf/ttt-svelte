@@ -1,6 +1,8 @@
 import type { Pagination } from 'interfaces/Pagination'
 import { fetchTimeout, options } from 'services/utils'
 
+const ROOT = '/api/users'
+
 /**
  * Find all users with pagination
  *
@@ -9,7 +11,7 @@ import { fetchTimeout, options } from 'services/utils'
  */
 const find = ({ page, limit }: Pagination): Promise<Response> => {
   return fetchTimeout(
-    `/api/users?page=${page}&limit=${limit}`,
+    `${ROOT}?page=${page}&limit=${limit}`,
     options('GET', undefined)
   )
 }
@@ -21,7 +23,7 @@ const find = ({ page, limit }: Pagination): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const getById = (id: string): Promise<Response> => {
-  return fetchTimeout(`/api/users/${id}`, options('GET', undefined))
+  return fetchTimeout(`${ROOT}/${id}`, options('GET', undefined))
 }
 
 /**
@@ -32,7 +34,7 @@ const getById = (id: string): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const update = (id: string, body: unknown): Promise<Response> => {
-  return fetchTimeout(`/api/users/${id}`, options('PUT', body))
+  return fetchTimeout(`${ROOT}/${id}`, options('PUT', body))
 }
 
 /**
@@ -43,7 +45,7 @@ const update = (id: string, body: unknown): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const updatePassword = (id: string, password: string): Promise<Response> => {
-  return fetchTimeout(`/api/users/${id}/password`, options('PUT', { password }))
+  return fetchTimeout(`${ROOT}/${id}/password`, options('PUT', { password }))
 }
 
 /**
@@ -53,7 +55,7 @@ const updatePassword = (id: string, password: string): Promise<Response> => {
  * @return {*}  {Promise<Response>}
  */
 const remove = (id: string): Promise<Response> => {
-  return fetchTimeout(`/api/users/${id}`, options('DELETE', undefined))
+  return fetchTimeout(`${ROOT}/${id}`, options('DELETE', undefined))
 }
 
 export { find, getById, update, updatePassword, remove }
