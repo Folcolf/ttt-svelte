@@ -1,8 +1,10 @@
+import type Route from '../types/Route'
+import _private from './private'
 import _public from './public'
 
-let routes = []
+const routes: Route[] = []
 
-// add public routes to the routes array
-routes = routes.concat(_public)
+routes.push(..._public)
+routes.push(..._private)
 
 export { routes }

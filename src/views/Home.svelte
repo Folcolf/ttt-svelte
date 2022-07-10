@@ -15,10 +15,8 @@
   <div class="ma-10 text-center">
     <p>This site allows two people to play tictactoe online!</p>
     <p>
-      If youd didn't know how to play go to <Link
-        to="/help"
-        class="success-text font-weight-bold">here</Link
-      >
+      If youd didn't know how to play go to
+      <Link to="/help" class="success-text font-weight-bold">here</Link>
     </p>
     <p>
       You can retrieve the scores of your previous games in your profile page
@@ -28,23 +26,16 @@
     <br />
     {#await count()}
       <ProgressCircular indeterminate color="primary" />
-    {:then value}
+    {:then { data }}
       <Card title="Games">
-        {#await value.json()}
-          <ProgressCircular indeterminate color="primary" />
-        {:then value}
-          {#if value === {}}
-            <p>You have played {value} games</p>
-          {:else}
-            <p>Be the first to play!</p>
-          {/if}
-        {:catch error}
-          <p>Error: {error}</p>
-        {/await}
+        {#if data !== 0}
+          <p>There is {data} game {data > 1 ? 's' : ''}</p>
+        {:else}
+          <p>Be the first to play!</p>
+        {/if}
       </Card>
     {:catch error}
       <Card title="Games">
-        <h3 class="mb-5">Error</h3>
         <p>{error}</p>
       </Card>
     {/await}
