@@ -2,7 +2,7 @@
   import { Footer } from 'svelte-materialify/src'
 
   import { mdiHelp, mdiHome, mdiPhone } from '@mdi/js'
-  import type { Navigation } from 'src/interfaces/Navigation'
+  import type { Navigation } from 'src/types/Navigation'
   import FooterMenu from './FooterMenu.svelte'
 
   export let menuItems = [

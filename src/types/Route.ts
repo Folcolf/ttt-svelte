@@ -1,12 +1,14 @@
-export default interface Route {
+export type Route = {
   path: string
   component: any
   meta: RouteMeta
 }
 
-export interface RouteMeta {
+export type RouteMeta = {
   title: string
   description: string
   icon: string
   private?: boolean
+  loggedIn?: boolean
+  invisible?: boolean
 }

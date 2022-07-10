@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Button, Icon } from 'svelte-materialify/src'
 
-  import type { Navigation } from 'src/interfaces/Navigation'
+  import type { Navigation } from 'src/types/Navigation'
   import { navigate } from 'svelte-navigator'
 
   export let menuItems: Navigation[]

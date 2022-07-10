@@ -1,6 +1,6 @@
 import { mdiHome, mdiLogin } from '@mdi/js'
 
-import type Route from 'src/interfaces/Route'
+import type Route from 'src/types/Route'
 
 import Home from 'src/views/Home.svelte'
 import Login from 'src/views/Login.svelte'
@@ -25,6 +25,7 @@ export default [
       description: 'Login to your account',
       icon: mdiLogin,
       private: false,
+      loggedIn: false,
     },
   },
   {
@@ -35,6 +36,7 @@ export default [
       description: 'Register for an account',
       icon: mdiLogin,
       private: false,
+      loggedIn: false,
     },
   },
 ] as Route[]

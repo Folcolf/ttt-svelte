@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte'
   import { Icon, ListItem } from 'svelte-materialify/src'
 
-  import type Route from 'src/interfaces/Route'
+  import type Route from 'src/types/Route'
   import { useLocation } from 'svelte-navigator'
 
   export let route: Route
