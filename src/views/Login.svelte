@@ -7,8 +7,8 @@
   import PasswordField from 'components/field/PasswordField.svelte'
   import { login } from 'services/auth'
   import Center from 'src/components/layout/Center.svelte'
-  import type { Page } from 'src/interfaces/model/Page'
-  import type { User } from 'src/interfaces/model/User'
+  import type { Page } from 'src/types/model/Page'
+  import type { User } from 'src/types/model/User'
   import { user } from 'stores/auth'
   import { message, snackbar, type } from 'stores/snackbar'
 
@@ -31,7 +31,7 @@
         type.set('info')
         snackbar.set(true)
         user.set(page.data)
-        setTimeout(() => navigate('/'), 1000)
+        setTimeout(() => navigate(-1), 1000)
       })
       .catch((e: Error) => {
         message.set(e.message)
@@ -55,7 +55,7 @@
           forgotRedirect={'password-reset'}
         />
         <CardActions class="d-flex justify-center">
-          <Button on:click={log} disabled={invalid}>Login</Button>
+          <Button disabled={invalid} type="submit" on:click={log}>Login</Button>
         </CardActions>
         <CardActions class="d-flex justify-center">
           <Link class="text-center text-decoration-none pointer" to="/register">
