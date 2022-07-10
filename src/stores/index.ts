@@ -25,10 +25,10 @@ const storage = <T>(key: string, initValue: T): Writable<T> => {
   })
 
   window.addEventListener('storage', () => {
-    const storedValueStr = localStorage.getItem(key)
-    if (storedValueStr == null) return
+    const storedValueStrWindow = localStorage.getItem(key)
+    if (storedValueStrWindow == null) return
 
-    const localValue: T = JSON.parse(storedValueStr)
+    const localValue: T = JSON.parse(storedValueStrWindow)
     if (localValue !== get(store)) store.set(localValue)
   })
 

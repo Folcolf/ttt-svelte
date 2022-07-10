@@ -1,11 +1,6 @@
-import type { Page } from 'interfaces/model/Page'
-import type { User } from 'interfaces/model/User'
-import {
-  fetchTimeout,
-  manageErrors,
-  manageResponse,
-  options,
-} from 'services/utils'
+import type { Page } from 'src/types/model/Page'
+import type { User } from 'src/types/model/User'
+import { fetchTimeout, manageResponse, options } from 'services/utils'
 
 /**
  * Login with email and password
@@ -15,9 +10,10 @@ import {
  * @return {*}  {Promise<Page<User>>}
  */
 const login = (email: string, password: string): Promise<Page<User>> => {
-  return fetchTimeout('/api/auth/login', options('POST', { email, password }))
-    .then(manageResponse)
-    .catch(manageErrors)
+  return fetchTimeout(
+    '/api/auth/login',
+    options('POST', { email, password })
+  ).then(manageResponse)
 }
 
 /**

@@ -1,14 +1,12 @@
 <script>
-  import { useLocation, useNavigate } from 'svelte-navigator'
+  import { navigate } from 'svelte-navigator'
 
-  import { user } from 'stores/auth'
+  import { check, user } from 'stores/auth'
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  $: check()
 
   $: if (!$user) {
     navigate('/login', {
-      state: { from: $location.pathname },
       replace: true,
     })
   }

@@ -4,8 +4,9 @@
 
   import Nav from 'components/navbar/Nav.svelte'
   import PrivateRoute from 'components/route/private/PrivateRoute.svelte'
-  import { routes } from 'src/routes/index'
   import NotFound from 'src/views/NotFound.svelte'
+
+  import { routes } from 'src/routes/index'
   import { message, snackbar, type } from 'stores/snackbar'
   import { theme } from 'stores/theme'
 
@@ -32,7 +33,9 @@
       {#if meta.private !== true}
         <Route {path} {component} let:params let:location />
       {:else}
-        <PrivateRoute {path} {component} let:params let:location />
+        <PrivateRoute {path} let:params let:location>
+          <svelte:component this={component} {params} {location} />
+        </PrivateRoute>
       {/if}
     {/each}
     <Route path="*" component={NotFound} />
