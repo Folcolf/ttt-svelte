@@ -41,12 +41,14 @@
 <NavigationDrawer style="position: absolute" class="aside-modal" {active}>
   <List nav dense>
     {#each routes as route}
-      {#if $isLoggedIn}
-        {#if route.meta.title !== 'login' && route.meta.title !== 'register'}
+      {#if !route.meta.invisible}
+        {#if $isLoggedIn}
+          {#if route.meta.loggedIn !== false}
+            <NavMenuItem {route} on:navigate={navigateTo} />
+          {/if}
+        {:else if route.meta.private !== true}
           <NavMenuItem {route} on:navigate={navigateTo} />
         {/if}
-      {:else if route.meta.private !== true}
-        <NavMenuItem {route} on:navigate={navigateTo} />
       {/if}
     {/each}
   </List>

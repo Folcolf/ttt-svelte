@@ -4,10 +4,9 @@
   import PrivateRouteGuard from './PrivateRouteGuard.svelte'
 
   export let path
-  export let component
 </script>
 
-<Route {path} {component} let:params let:location let:navigate>
+<Route {path} let:params let:location let:navigate>
   <PrivateRouteGuard>
     <slot {params} {location} {navigate} />
   </PrivateRouteGuard>

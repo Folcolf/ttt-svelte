@@ -1,5 +1,7 @@
-import type { Pagination } from 'interfaces/Pagination'
-import { fetchTimeout } from 'services/utils'
+import type { Pagination } from 'src/types/Pagination'
+import { fetchTimeout, manageResponse } from 'services/utils'
+import type { Game } from 'src/types/model/Game'
+import type { Page } from 'src/types/model/Page'
 import { options } from './utils'
 
 const ROOT = '/api/games'
@@ -8,52 +10,58 @@ const ROOT = '/api/games'
  * Find all games with pagination
  *
  * @param {Pagination} { page, limit }
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<Game[]>>}
  */
-const find = ({ page, limit }: Pagination): Promise<Response> => {
+const find = ({ page, limit }: Pagination): Promise<Page<Game[]>> => {
   return fetchTimeout(
     `${ROOT}?page=${page}&limit=${limit}`,
     options('GET', undefined)
-  )
+  ).then(manageResponse)
 }
 
 /**
  * Count all games
  *
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<number>>}
  */
-const count = (): Promise<Response> => {
-  return fetchTimeout(`${ROOT}/count`, options('GET', undefined))
+const count = (): Promise<Page<number>> => {
+  return fetchTimeout(`${ROOT}/count`, options('GET', undefined)).then(
+    manageResponse
+  )
 }
 
 /**
  * Count games by user id
  *
  * @param {string} id
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<number>>}
  */
-const countByUser = (id: string): Promise<Response> => {
-  return fetchTimeout(`${ROOT}/count/${id}`, options('GET', undefined))
+const countByUser = (id: string): Promise<Page<number>> => {
+  return fetchTimeout(`${ROOT}/count/${id}`, options('GET', undefined)).then(
+    manageResponse
+  )
 }
 
 /**
  * Get game by id
  *
  * @param {string} id
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<Game>>}
  */
-const getById = (id: string): Promise<Response> => {
-  return fetchTimeout(`${ROOT}/${id}`, options('GET', undefined))
+const getById = (id: string): Promise<Page<Game>> => {
+  return fetchTimeout(`${ROOT}/${id}`, options('GET', undefined)).then(
+    manageResponse
+  )
 }
 
 /**
  * Create new game
  *
  * @param {unknown} body
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<Game>>}
  */
-const create = (body: unknown): Promise<Response> => {
-  return fetchTimeout(ROOT, options('POST', body))
+const create = (body: unknown): Promise<Page<Game>> => {
+  return fetchTimeout(ROOT, options('POST', body)).then(manageResponse)
 }
 
 /**
@@ -61,20 +69,24 @@ const create = (body: unknown): Promise<Response> => {
  *
  * @param {string} id
  * @param {unknown} body
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<Game>>}
  */
-const update = (id: string, body: unknown): Promise<Response> => {
-  return fetchTimeout(`${ROOT}/${id}`, options('PUT', body))
+const update = (id: string, body: unknown): Promise<Page<Game>> => {
+  return fetchTimeout(`${ROOT}/${id}`, options('PUT', body)).then(
+    manageResponse
+  )
 }
 
 /**
  * Delete game by id
  *
  * @param {string} id
- * @return {*}  {Promise<Response>}
+ * @return {*}  {Promise<Page<Game>>}
  */
-const remove = (id: string): Promise<Response> => {
-  return fetchTimeout(`${ROOT}/${id}`, options('DELETE', undefined))
+const remove = (id: string): Promise<Page<Game>> => {
+  return fetchTimeout(`${ROOT}/${id}`, options('DELETE', undefined)).then(
+    manageResponse
+  )
 }
 
 export { find, count, countByUser, getById, create, update, remove }
