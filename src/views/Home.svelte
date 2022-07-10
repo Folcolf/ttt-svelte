@@ -32,11 +32,11 @@
       <CardBody>
         {#await count()}
           <Spinner color={'primary'} size={'lg'} />
-        {:then value}
-          {#if value}
-            <p>You have played {value.data} games</p>
+        {:then { data }}
+          {#if data && data > 0}
+            <p>You have played {data} games</p>
           {:else}
-            <p>Be the first to play!</p>
+            <p>You haven't played any games yet</p>
           {/if}
         {:catch error}
           <h3 class="mb-5">Error</h3>
