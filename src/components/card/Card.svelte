@@ -1,17 +1,17 @@
 <script lang="ts">
-  import { Card, CardText } from 'svelte-materialify/src'
+  import { Card, CardText } from 'sveltestrap'
 
-  export let title
-  export let subtitle = undefined
+  export let title: string
+  export let subtitle: string = undefined
 </script>
 
-<Card outlined>
-  <div class="pl-4 pr-4 pt-3 mb-5">
-    <p id="title" class="text-center text-h4 mb-2">{title}</p>
-    <div class="underline-title primary-color" />
-    {#if subtitle !== undefined}
+<Card class="bg-light">
+  <div class="pl-4 pr-4 pt-3 mb-3">
+    <p id="title" class="text-center h4 mb-2">{title}</p>
+    <div class="underline-title bg-primary" />
+    {#if subtitle}
       <br />
-      <span class="text-h6 mb-2">{subtitle}</span>
+      <span class="h6 mb-2">{subtitle}</span>
     {/if}
   </div>
   <CardText>
@@ -20,8 +20,6 @@
 </Card>
 
 <style lang="scss">
-  @import 'svelte-materialify/src/styles/tools/colors';
-
   #title {
     font-family: 'Raleway Thin', sans-serif;
     letter-spacing: 4px;

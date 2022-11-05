@@ -1,20 +1,15 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import {
-    Button,
-    List,
-    NavigationDrawer,
-    Overlay,
-  } from 'svelte-materialify/src'
   import { navigate } from 'svelte-navigator'
+  import { Button, Container, Icon, ListGroup, Offcanvas } from 'sveltestrap'
 
   import { logout } from 'services/auth'
   import { routes } from 'src/routes'
   import { isLoggedIn, user } from 'stores/auth'
-  import { message, snackbar, type } from 'stores/snackbar'
+  import { show } from 'stores/snackbar'
   import NavMenuItem from './NavMenuItem.svelte'
 
-  export let active
+  export let active: boolean
 
   const dispatch = createEventDispatcher()
 
@@ -30,32 +25,33 @@
         active = false
         navigate('/login')
       })
-      .catch(() => {
-        snackbar.set(true)
-        message.set('Logout failed')
-        type.set('error')
-      })
+      .catch(() => show('danger', 'Logout failed'))
   }
 </script>
 
-<NavigationDrawer style="position: absolute" class="aside-modal" {active}>
-  <List nav dense>
-    {#each routes as route}
-      {#if !route.meta.invisible}
-        {#if $isLoggedIn}
-          {#if route.meta.loggedIn !== false}
+<Offcanvas isOpen={active} toggle={() => dispatch('navigation')} header="Menu">
+  <Container class="d-flex flex-column h-100">
+    <ListGroup flush>
+      {#each routes as route}
+        {#if !route.meta.invisible}
+          {#if $isLoggedIn}
+            {#if route.meta.loggedIn !== false}
+              <NavMenuItem {route} on:navigate={navigateTo} />
+            {/if}
+          {:else if route.meta.private !== true}
             <NavMenuItem {route} on:navigate={navigateTo} />
           {/if}
-        {:else if route.meta.private !== true}
-          <NavMenuItem {route} on:navigate={navigateTo} />
         {/if}
-      {/if}
-    {/each}
-  </List>
-  <span slot="append" class="pa-2">
+      {/each}
+    </ListGroup>
     {#if $isLoggedIn}
-      <Button block on:click={handleLogout}>Logout</Button>
+      <Button
+        class="pointer text-decoration-none mb-0 mt-auto"
+        on:click={handleLogout}
+      >
+        <Icon name="box-arrow-in-left" />
+        Logout
+      </Button>
     {/if}
-  </span>
-</NavigationDrawer>
-<Overlay {active} absolute on:click={() => dispatch('navigation')} index={1} />
+  </Container>
+</Offcanvas>

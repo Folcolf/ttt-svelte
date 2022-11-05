@@ -1,55 +1,42 @@
 <script lang="ts">
-  import { MaterialApp, Snackbar } from 'svelte-materialify/src'
   import { Route, Router } from 'svelte-navigator'
+  import { Alert } from 'sveltestrap'
 
   import Nav from 'components/navbar/Nav.svelte'
   import PrivateRoute from 'components/route/private/PrivateRoute.svelte'
-  import NotFound from 'src/views/NotFound.svelte'
+  import NotFound from 'views/NotFound.svelte'
 
   import { routes } from 'src/routes/index'
   import { message, snackbar, type } from 'stores/snackbar'
-  import { theme } from 'stores/theme'
 
-  import './styles/global.scss'
+  import './scss/global.scss'
 
-  const getClass = (type) => {
-    switch (type) {
-      case 'info':
-        return 'primary-color'
-      case 'success':
-        return 'success-color'
-      case 'error':
-        return 'error-color'
-      default:
-        return 'primary-color'
-    }
-  }
+  $: $snackbar && setTimeout(() => snackbar.set(false), 3000)
 </script>
 
-<MaterialApp theme={$theme}>
-  <Router>
-    <Nav />
-    {#each routes as { path, component, meta }}
-      {#if meta.private !== true}
-        <Route {path} {component} let:params let:location />
-      {:else}
-        <PrivateRoute {path} let:params let:location>
-          <svelte:component this={component} {params} {location} />
-        </PrivateRoute>
-      {/if}
-    {/each}
-    <Route path="*" component={NotFound} />
-  </Router>
+<svelte:head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+  />
+</svelte:head>
 
-  {#if $snackbar}
-    <Snackbar
-      class={getClass($type) + ' flex-column'}
-      bottom
-      center
-      timeout={2000}
-      bind:active={$snackbar}
-    >
-      {$message}
-    </Snackbar>
-  {/if}
-</MaterialApp>
+<Router>
+  <Nav />
+  {#each routes as { path, component, meta }}
+    {#if meta.private !== true}
+      <Route {path} {component} />
+    {:else}
+      <PrivateRoute {path}>
+        <svelte:component this={component} />
+      </PrivateRoute>
+    {/if}
+  {/each}
+  <Route path="*" component={NotFound} />
+</Router>
+
+{#if $snackbar}
+  <Alert class="flex-column navbar fixed-bottom" color={$type} fade>
+    {$message}
+  </Alert>
+{/if}

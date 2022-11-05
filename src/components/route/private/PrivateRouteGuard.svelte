@@ -4,12 +4,7 @@
   import { check, user } from 'stores/auth'
 
   $: check()
-
-  $: if (!$user) {
-    navigate('/login', {
-      replace: true,
-    })
-  }
+  $: if (!$user) navigate('/login', { replace: true })
 </script>
 
 {#if $user}

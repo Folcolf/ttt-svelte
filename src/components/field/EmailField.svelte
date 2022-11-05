@@ -1,22 +1,38 @@
 <script>
-  import { TextField } from 'svelte-materialify/src'
+  import { Input, InputGroup } from 'sveltestrap'
 
   export let email
   export let error
 
-  const emailRules = [
-    (v) => !!v || 'Required',
-    (v) => v.length <= 25 || 'Max 25 characters',
-    (v) => /^\S+@\S+\.\S+$/.test(v) || 'Invalid email address',
-  ]
+  let invalid = false
+  let feedback = ''
+
+  const requiredRules = () => {
+    if (!email) {
+      feedback = 'Required'
+    } else if (email.length > 25) {
+      feedback = 'Max 25 characters'
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+      feedback = 'Invalid email address'
+    } else {
+      feedback = ''
+    }
+    invalid = !!feedback
+    error = invalid ? feedback : null
+  }
 </script>
 
-<TextField
-  bind:value={email}
-  bind:error
-  validateOnBlur
-  class="pb-5"
-  rules={emailRules}
->
-  Email
-</TextField>
+<InputGroup>
+  <Input
+    type="email"
+    name="email"
+    label="email"
+    placeholder="Email"
+    {feedback}
+    bind:value={email}
+    bind:invalid
+    on:blur={requiredRules}
+  >
+    Email
+  </Input>
+</InputGroup>

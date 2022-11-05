@@ -1,6 +1,6 @@
 import { navigate } from 'svelte-navigator'
 
-import { user } from 'src/stores/auth'
+import { user } from 'stores/auth'
 
 /**
  * Create new request init for fetch
@@ -38,22 +38,22 @@ const createOptions = (method: string, body: unknown): RequestInit => {
  * @param {number} [timeout=5000]
  * @return {*}  {Promise<Response>}
  */
-const fetchTimeout = (
+const fetchTimeout = async (
   url: string,
   options: RequestInit,
   timeout: number = 5000
 ): Promise<Response> => {
   return new Promise((resolve, reject) => {
-    const timeoutId = setTimeout(() => {
-      reject(Error('Sorry, an error has occurred. Please try again later.'))
-    }, timeout)
+    const timeoutId = setTimeout(
+      () =>
+        reject(Error('Sorry, an error has occurred. Please try again later.')),
+      timeout
+    )
 
     fetch(url, options)
       .then(resolve)
       .catch(reject)
-      .finally(() => {
-        clearTimeout(timeoutId)
-      })
+      .finally(() => clearTimeout(timeoutId))
   })
 }
 
@@ -63,17 +63,15 @@ const fetchTimeout = (
  * @param {Response} response
  * @return {*}
  */
-const manageResponse = (response: Response) => {
-  console.log(response)
-
-  if (!response.ok) {
-    if (response.status === 401) {
-      user.set(null)
-      navigate('/login')
-    }
-
-    throw Error('Sorry, an error has occurred. Please try again later.')
+const manageResponse = async (response: Response): Promise<any> => {
+  if (response.ok) {
+    return response.json()
   }
-  return response.json()
+  if (response.status === 401) {
+    user.set(null)
+    navigate('/login')
+  }
+
+  throw Error('Sorry, an error has occurred. Please try again later.')
 }
 export { createOptions as options, fetchTimeout, manageResponse }
