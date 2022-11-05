@@ -40,7 +40,7 @@
     <CardBody>
       <div class="d-flex gap-3 flex-column">
         <EmailField bind:email bind:error />
-        <TextField label="Name" bind:value={name} />
+        <TextField label="Name" bind:value={name} bind:error />
         <PasswordField bind:password bind:error />
       </div>
       <CardBody class="d-flex justify-content-center">
