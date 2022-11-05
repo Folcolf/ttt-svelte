@@ -1,7 +1,7 @@
 name: Svelte check
 on: [push, pull_request]
 jobs:
-  build:
+  check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -9,10 +9,14 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-      - run: npm ci
+
       - name: Install build dependencies
         run: npm install svelte-kit sync svelte-check
+
+      - run: npm ci
+
       - name: Add Svelte Check annotator
         uses: prgm-dev/svelte-check-pr-annotator@main
+
       - name: Run Svelte-Check
         run: npx svelte-check --output machine --use-new-transformation true
