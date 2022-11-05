@@ -1,48 +1,30 @@
 <script lang="ts">
-  import { mdiBrightness4, mdiMenu } from '@mdi/js'
-  import { AppBar, Button, Icon } from 'svelte-materialify/src'
   import { navigate } from 'svelte-navigator'
+  import { Navbar, NavbarToggler } from 'sveltestrap'
 
-  import { theme } from 'stores/theme'
   import NavMenu from './menu/NavMenu.svelte'
 
   let active = false
 
-  const toggleTheme = () => theme.set($theme === 'light' ? 'dark' : 'light')
   const toggleNavigation = () => (active = !active)
 </script>
 
-<div>
-  <AppBar dense class="primary-color">
-    <div slot="icon">
-      <Button fab depressed text on:click={toggleNavigation}>
-        <Icon path={mdiMenu} class="white-text" />
-      </Button>
-    </div>
-    <span
-      slot="title"
-      id="title"
-      class="pointer"
-      on:click={() => navigate('/')}
-    >
-      TicTacToe
-    </span>
-    <div style="flex-grow:1" />
-    <div class="icon">
-      <Button fab size="x-small" on:click={toggleTheme}>
-        <Icon path={mdiBrightness4} size="20" />
-      </Button>
-    </div>
-  </AppBar>
-  <NavMenu on:navigation={toggleNavigation} bind:active />
-</div>
+<Navbar fixed={'top'} color={'primary'} container={false} class="p-2 gap-2">
+  <NavbarToggler on:click={toggleNavigation} class="pointer" color="primary" />
+  <span
+    aria-label="title"
+    class="pointer"
+    on:click={() => navigate('/')}
+    on:keydown={() => navigate('/')}
+  >
+    <div class="title">TicTacToe</div>
+  </span>
+  <div style="flex-grow:1" />
+</Navbar>
+<NavMenu on:navigation={toggleNavigation} bind:active />
 
-<style lang="scss">
-  .icon {
-    margin-right: 10px !important;
-  }
-
-  #title {
+<style scoped lang="scss">
+  .title {
     color: white !important;
     font-size: 1.5rem;
     font-weight: bold;

@@ -1,20 +1,15 @@
 import { writable } from 'svelte/store'
 
-import type { User } from 'src/types/model/User'
-import { isLogged } from 'src/services/auth'
+import { isLogged } from 'services/auth'
 import storage from './index'
 
-const user = storage<User>('user', null)
-const isLoggedIn = writable(false)
+const user = storage<string>('user', null)
+const isLoggedIn = writable<boolean>(false)
 
-user.subscribe((data) => {
-  isLoggedIn.set(!!data)
-})
+user.subscribe((data) => isLoggedIn.set(!!data))
 
 const check = () => {
-  isLogged().then((page) => {
-    user.set(page.data)
-  })
+  isLogged().then((page) => user.set(page.data.id))
 }
 
 export { user, isLoggedIn, check }

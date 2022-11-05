@@ -1,10 +1,8 @@
-import { mdiHome, mdiLogin } from '@mdi/js'
+import Home from 'views/Home.svelte'
+import Login from 'views/Login.svelte'
+import Register from 'views/Register.svelte'
 
-import type Route from 'src/types/Route'
-
-import Home from 'src/views/Home.svelte'
-import Login from 'src/views/Login.svelte'
-import Register from 'src/views/Register.svelte'
+import type { Route } from 'types/Route'
 
 export default [
   {
@@ -13,7 +11,7 @@ export default [
     meta: {
       title: 'Home',
       description: 'Home page',
-      icon: mdiHome,
+      icon: 'house',
       private: false,
     },
   },
@@ -23,7 +21,7 @@ export default [
     meta: {
       title: 'Login',
       description: 'Login to your account',
-      icon: mdiLogin,
+      icon: 'box-arrow-in-right',
       private: false,
       loggedIn: false,
     },
@@ -34,7 +32,7 @@ export default [
     meta: {
       title: 'Register',
       description: 'Register for an account',
-      icon: mdiLogin,
+      icon: 'box-arrow-in-right',
       private: false,
       loggedIn: false,
     },

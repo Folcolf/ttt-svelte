@@ -1,4 +1,4 @@
-@import '../theme/_material-theme.scss';
+@import 'custom.scss';
 
 * {
   padding: 0;
@@ -10,6 +10,16 @@ body,
 #app {
   min-height: 100% !important;
   height: 100%;
+}
+
+html,
+body {
+  overflow: hidden;
+}
+
+body {
+  padding-top: 60px;
+  padding-bottom: 120px;
 }
 
 a {
@@ -48,7 +58,7 @@ a {
 
 .pointer {
   cursor: pointer;
-  color: $primary-color !important;
+  color: $primary !important;
 
   &:hover {
     opacity: 0.5;
@@ -60,9 +70,10 @@ a {
   height: 100%;
 }
 
-.s-app {
+#app {
   display: flex !important;
   flex-direction: column !important;
   height: inherit;
   align-content: stretch;
+  overflow-y: auto;
 }

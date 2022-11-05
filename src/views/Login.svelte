@@ -1,22 +1,23 @@
 <script lang="ts">
-  import { Button, CardActions, CardText } from 'svelte-materialify/src'
-  import { Link, navigate } from 'svelte-navigator'
+  import { navigate } from 'svelte-navigator'
+  import { Button, CardBody } from 'sveltestrap'
 
   import Card from 'components/card/Card.svelte'
   import EmailField from 'components/field/EmailField.svelte'
   import PasswordField from 'components/field/PasswordField.svelte'
+  import Center from 'components/layout/Center.svelte'
+
   import { login } from 'services/auth'
-  import Center from 'src/components/layout/Center.svelte'
-  import type { Page } from 'src/types/model/Page'
-  import type { User } from 'src/types/model/User'
   import { user } from 'stores/auth'
-  import { message, snackbar, type } from 'stores/snackbar'
+  import { show } from 'stores/snackbar'
+
+  import type { Page } from 'types/model/Page'
+  import type { User } from 'types/model/User'
 
   $: email = ''
   $: password = ''
   $: error = null
-
-  $: invalid = email === '' || password === '' || error === null
+  $: invalid = email === '' || password === '' || error !== null
 
   const handleEnter = (e: KeyboardEvent) => {
     if (e.code === 'Enter' && !invalid) {
@@ -27,17 +28,11 @@
   const log = () => {
     login(email, password)
       .then((page: Page<User>) => {
-        message.set('Your logged in')
-        type.set('info')
-        snackbar.set(true)
-        user.set(page.data)
+        show('info', 'Your logged in')
+        user.set(page.data.id)
         setTimeout(() => navigate(-1), 1000)
       })
-      .catch((e: Error) => {
-        message.set(e.message)
-        type.set('error')
-        snackbar.set(true)
-      })
+      .catch((e: Error) => show('danger', e.message))
   }
 </script>
 
@@ -45,8 +40,8 @@
 
 <Center>
   <Card title="LOGIN">
-    <CardText>
-      <div class="d-flex justify-space-between flex-column">
+    <CardBody>
+      <div class="d-flex gap-3 flex-column">
         <EmailField bind:email bind:error />
         <PasswordField
           bind:password
@@ -54,15 +49,19 @@
           forgotPassword={true}
           forgotRedirect={'password-reset'}
         />
-        <CardActions class="d-flex justify-center">
-          <Button disabled={invalid} type="submit" on:click={log}>Login</Button>
-        </CardActions>
-        <CardActions class="d-flex justify-center">
-          <Link class="text-center text-decoration-none pointer" to="/register">
-            Don't have account yet?
-          </Link>
-        </CardActions>
       </div>
-    </CardText>
+      <CardBody class="d-flex justify-content-center">
+        <Button disabled={invalid} on:click={log}>Login</Button>
+      </CardBody>
+      <div class="d-flex justify-content-center">
+        <Button
+          color="link"
+          class="text-center text-decoration-none pointer"
+          on:click={() => navigate('/register')}
+        >
+          Don't have account yet?
+        </Button>
+      </div>
+    </CardBody>
   </Card>
 </Center>

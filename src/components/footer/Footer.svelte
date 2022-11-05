@@ -1,34 +1,33 @@
 <script lang="ts">
-  import { Footer } from 'svelte-materialify/src'
+  import type { Navigation } from 'types/Navigation'
+  import ListButton from '../list/ListButton.svelte'
 
-  import { mdiHelp, mdiHome, mdiPhone } from '@mdi/js'
-  import type { Navigation } from 'src/types/Navigation'
-  import FooterMenu from './FooterMenu.svelte'
-
-  export let menuItems = [
+  const menuItems = [
     {
       path: '/',
       name: 'Home',
-      icon: mdiHome,
+      icon: 'house',
     },
     {
       path: '/help',
       name: 'Help',
-      icon: mdiHelp,
+      icon: 'info-circle',
     },
     {
       path: '/contact',
       name: 'Contact',
-      icon: mdiPhone,
+      icon: 'person-lines-fill',
     },
   ] as Navigation[]
 
   const year = new Date().getFullYear()
 </script>
 
-<Footer padless class="secondary-color justify-center flex-column">
-  <FooterMenu {menuItems} />
-  <div class="primary-color pa-2 text-center" style="width:100%">
+<footer
+  class="navbar fixed-bottom justify-content-center flex-column bg-light pb-0"
+>
+  <ListButton {menuItems} />
+  <div class="bg-primary p-2 text-center text-white w-100">
     {year} - <b>TicTacToe</b>
   </div>
-</Footer>
+</footer>

@@ -3,11 +3,11 @@
 
   import PrivateRouteGuard from './PrivateRouteGuard.svelte'
 
-  export let path
+  export let path: string
 </script>
 
-<Route {path} let:params let:location let:navigate>
+<Route {path}>
   <PrivateRouteGuard>
-    <slot {params} {location} {navigate} />
+    <slot />
   </PrivateRouteGuard>
 </Route>

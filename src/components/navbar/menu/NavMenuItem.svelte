@@ -1,30 +1,27 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-  import { Icon, ListItem } from 'svelte-materialify/src'
-
-  import type Route from 'src/types/Route'
   import { useLocation } from 'svelte-navigator'
+  import { Button, Icon, ListGroupItem } from 'sveltestrap'
+
+  import type { Route } from 'types/Route'
 
   export let route: Route
 
   const dispatch = createEventDispatcher()
   const location = useLocation()
-  $: isActive = () => {
-    return $location.pathname === route.path
-  }
+  $: active = $location.pathname === route.path
 
-  const onClick = () => {
-    dispatch('navigate', { path: route.path })
-  }
+  const onClick = () => dispatch('navigate', { path: route.path })
 </script>
 
-<ListItem
+<Button
   class="pointer text-decoration-none"
   on:click={onClick}
-  active={isActive()}
+  {active}
+  color={'link'}
 >
-  <span slot="prepend">
-    <Icon path={route.meta.icon} />
-  </span>
-  {route.meta.title}
-</ListItem>
+  <ListGroupItem class="bg-light">
+    <Icon name={route.meta.icon} />
+    {route.meta.title}
+  </ListGroupItem>
+</Button>

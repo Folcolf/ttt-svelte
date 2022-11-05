@@ -1,7 +1,8 @@
-import type { Pagination } from 'src/types/Pagination'
 import { fetchTimeout, manageResponse, options } from 'services/utils'
-import type { Page } from 'src/types/model/Page'
-import type { User } from 'src/types/model/User'
+
+import type { Page } from 'types/model/Page'
+import type { User } from 'types/model/User'
+import type { Pagination } from 'types/Pagination'
 
 const ROOT = '/api/users'
 
@@ -11,7 +12,7 @@ const ROOT = '/api/users'
  * @param {Pagination} { page, limit }
  * @return {*}  {Promise<Page<User[]>>}
  */
-const find = ({ page, limit }: Pagination): Promise<Page<User[]>> => {
+const find = async ({ page, limit }: Pagination): Promise<Page<User[]>> => {
   return fetchTimeout(
     `${ROOT}?page=${page}&limit=${limit}`,
     options('GET', undefined)
@@ -24,7 +25,7 @@ const find = ({ page, limit }: Pagination): Promise<Page<User[]>> => {
  * @param {string} id
  * @return {*}  {Promise<Page<User>>}
  */
-const getById = (id: string): Promise<Page<User>> => {
+const getById = async (id: string): Promise<Page<User>> => {
   return fetchTimeout(`${ROOT}/${id}`, options('GET', undefined)).then(
     manageResponse
   )
@@ -37,7 +38,7 @@ const getById = (id: string): Promise<Page<User>> => {
  * @param {unknown} body
  * @return {*}  {Promise<Page<User>>}
  */
-const update = (id: string, body: unknown): Promise<Page<User>> => {
+const update = async (id: string, body: unknown): Promise<Page<User>> => {
   return fetchTimeout(`${ROOT}/${id}`, options('PUT', body)).then(
     manageResponse
   )
@@ -50,7 +51,10 @@ const update = (id: string, body: unknown): Promise<Page<User>> => {
  * @param {string} password
  * @return {*}  {Promise<Page<User>>}
  */
-const updatePassword = (id: string, password: string): Promise<Page<User>> => {
+const updatePassword = async (
+  id: string,
+  password: string
+): Promise<Page<User>> => {
   return fetchTimeout(
     `${ROOT}/${id}/password`,
     options('PUT', { password })
@@ -63,7 +67,7 @@ const updatePassword = (id: string, password: string): Promise<Page<User>> => {
  * @param {string} id
  * @return {*}  {Promise<Page<User>>}
  */
-const remove = (id: string): Promise<Page<User>> => {
+const remove = async (id: string): Promise<Page<User>> => {
   return fetchTimeout(`${ROOT}/${id}`, options('DELETE', undefined)).then(
     manageResponse
   )

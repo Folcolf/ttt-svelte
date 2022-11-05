@@ -10,11 +10,12 @@ import { get, writable } from 'svelte/store'
  * @return {*}  {Writable<T>}
  */
 const storage = <T>(key: string, initValue: T): Writable<T> => {
-  const store = writable(initValue)
-
+  const store = writable<T>(initValue)
   const storedValueStr = localStorage.getItem(key)
 
-  if (storedValueStr != null) store.set(JSON.parse(storedValueStr))
+  if (storedValueStr != null) {
+    store.set(JSON.parse(storedValueStr))
+  }
 
   store.subscribe((val) => {
     if ([null, undefined].includes(val)) {
@@ -26,10 +27,14 @@ const storage = <T>(key: string, initValue: T): Writable<T> => {
 
   window.addEventListener('storage', () => {
     const storedValueStrWindow = localStorage.getItem(key)
-    if (storedValueStrWindow == null) return
+    if (storedValueStrWindow == null) {
+      return
+    }
 
     const localValue: T = JSON.parse(storedValueStrWindow)
-    if (localValue !== get(store)) store.set(localValue)
+    if (localValue !== get(store)) {
+      store.set(localValue)
+    }
   })
 
   return store

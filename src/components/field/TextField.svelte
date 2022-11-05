@@ -1,17 +1,29 @@
 <script>
-  import { TextField } from 'svelte-materialify/src'
+  import { Input } from 'sveltestrap'
+
   export let value
+  export let label
   export let error
 
-  const requiredRules = [(v) => !!v || 'Required']
+  let invalid = false
+  let feedback = ''
+
+  const requiredRules = () => {
+    if (!value) feedback = 'Required'
+    else feedback = ''
+    invalid = !!feedback
+    error = invalid ? feedback : null
+  }
 </script>
 
-<TextField
+<Input
+  type="text"
+  {label}
+  placeholder={label}
+  {feedback}
   bind:value
-  bind:error
-  validateOnBlur
-  class="pb-5"
-  rules={requiredRules}
+  bind:invalid
+  on:blur={requiredRules}
 >
   Name
-</TextField>
+</Input>
