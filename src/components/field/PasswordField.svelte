@@ -24,7 +24,12 @@
 
 <InputGroup>
   <InputGroupText>
-    <Button on:click={() => (show = !show)} color="link" class="p-0">
+    <Button
+      on:click={() => (show = !show)}
+      color="link"
+      class="p-0"
+      tabindex={3}
+    >
       <Icon name={show ? 'eye-fill' : 'eye-slash-fill'} />
     </Button>
   </InputGroupText>
@@ -36,6 +41,7 @@
     bind:value={password}
     bind:invalid
     {feedback}
+    tabindex={2}
     on:blur={requiredRules}
   >
     Password

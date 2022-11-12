@@ -12,7 +12,6 @@
   import { show } from 'stores/snackbar'
 
   import type { Page } from 'types/model/Page'
-  import type { User } from 'types/model/User'
 
   $: email = ''
   $: password = ''
@@ -27,10 +26,10 @@
 
   const log = () => {
     login(email, password)
-      .then((page: Page<User>) => {
+      .then((page: Page<string>) => {
         show('info', 'Your logged in')
-        user.set(page.data.id)
-        setTimeout(() => navigate(-1), 1000)
+        user.set(page.data)
+        setTimeout(() => navigate('/'), 1000)
       })
       .catch((e: Error) => show('danger', e.message))
   }

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount, onDestroy } from 'svelte'
   import type { Navigation } from 'types/Navigation'
   import ListButton from '../list/ListButton.svelte'
 
@@ -21,13 +22,23 @@
   ] as Navigation[]
 
   const year = new Date().getFullYear()
+
+  onMount(() => {
+    const body = document.querySelector('body')
+    body && (body.style.paddingBottom = '100px')
+  })
+
+  onDestroy(() => {
+    const body = document.querySelector('body')
+    body && (body.style.paddingBottom = '0px')
+  })
 </script>
 
 <footer
-  class="navbar fixed-bottom justify-content-center flex-column bg-light pb-0"
+  class="footer fixed-bottom justify-content-center text-center flex-column bg-light pb-0"
 >
   <ListButton {menuItems} />
-  <div class="bg-primary p-2 text-center text-white w-100">
+  <div class="bg-primary p-2 text-white w-100">
     {year} - <b>TicTacToe</b>
   </div>
 </footer>

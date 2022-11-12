@@ -3,10 +3,8 @@
   import { navigate } from 'svelte-navigator'
   import { Button, Container, Icon, ListGroup, Offcanvas } from 'sveltestrap'
 
-  import { logout } from 'services/auth'
   import { routes } from 'src/routes'
   import { isLoggedIn, user } from 'stores/auth'
-  import { show } from 'stores/snackbar'
   import NavMenuItem from './NavMenuItem.svelte'
 
   export let active: boolean
@@ -19,13 +17,9 @@
   }
 
   const handleLogout = () => {
-    logout()
-      .then(() => {
-        user.set(null)
-        active = false
-        navigate('/login')
-      })
-      .catch(() => show('danger', 'Logout failed'))
+    user.set(null)
+    active = false
+    navigate('/login')
   }
 </script>
 

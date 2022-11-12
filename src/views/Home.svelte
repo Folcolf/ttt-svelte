@@ -3,7 +3,6 @@
   import { Button, CardBody, Container, Spinner } from 'sveltestrap'
 
   import Card from 'components/card/Card.svelte'
-  import Footer from 'components/footer/Footer.svelte'
   import Top from 'components/layout/Top.svelte'
 
   import { count } from 'services/game'
@@ -51,7 +50,9 @@
   </div>
 </Top>
 
-<Footer />
+{#await import('components/footer/Footer.svelte') then Module}
+  <Module.default />
+{/await}
 
 <style lang="scss">
   p {

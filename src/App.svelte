@@ -11,7 +11,7 @@
 
   import './scss/global.scss'
 
-  $: $snackbar && setTimeout(() => snackbar.set(false), 3000)
+  $: $snackbar && setTimeout(() => snackbar.set(false), 2000)
 </script>
 
 <svelte:head>

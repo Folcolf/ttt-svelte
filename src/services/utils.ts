@@ -1,4 +1,5 @@
 import { navigate } from 'svelte-navigator'
+import { get } from 'svelte/store'
 
 import { user } from 'stores/auth'
 
@@ -14,6 +15,11 @@ const createOptions = (method: string, body: unknown): RequestInit => {
   const headers = new Headers()
   headers.append('Content-Type', 'application/json')
   headers.append('Accept', 'application/json')
+
+  const token = get(user)
+  if (token) {
+    headers.append('Authorization', `Bearer ${token}`)
+  }
 
   const init: RequestInit = {
     method,

@@ -17,11 +17,6 @@ body {
   overflow: hidden;
 }
 
-body {
-  padding-top: 60px;
-  padding-bottom: 120px;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -76,4 +71,8 @@ a {
   height: inherit;
   align-content: stretch;
   overflow-y: auto;
+}
+
+.h-inherit {
+  height: inherit !important;
 }

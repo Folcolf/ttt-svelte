@@ -3,14 +3,26 @@
 
   import Board from 'src/components/game/Board.svelte'
   import Center from 'src/components/layout/Center.svelte'
+  import { user } from 'stores/auth'
 
   const params = useParams()
 
-  const board = ['toto', null, null, null, null, null, null, null, null]
+  const board = [
+    '636280a9c36f207e2b336190',
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+  ]
 
-  const wss = new WebSocket(`/api/events/${$params.id}`)
+  const wss = new WebSocket(`ws://localhost/ws/events/${$params.id}`)
 
   wss.onopen = () => {
+    wss.send($user)
     console.log('connected')
   }
 

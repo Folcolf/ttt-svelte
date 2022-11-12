@@ -29,6 +29,7 @@
     label="email"
     placeholder="Email"
     {feedback}
+    tabindex={1}
     bind:value={email}
     bind:invalid
     on:blur={requiredRules}

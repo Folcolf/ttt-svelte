@@ -8,9 +8,12 @@ import type { User } from 'types/model/User'
  *
  * @param {string} email
  * @param {string} password
- * @return {*}  {Promise<Page<User>>}
+ * @return {*}  {Promise<Page<string>>}
  */
-const login = async (email: string, password: string): Promise<Page<User>> => {
+const login = async (
+  email: string,
+  password: string
+): Promise<Page<string>> => {
   return fetchTimeout(
     '/api/auth/login',
     options('POST', { email, password })
@@ -37,25 +40,14 @@ const register = async (
 }
 
 /**
- * Logout the user
- *
- * @return {*}  {Promise<Page<User>>}
- */
-const logout = async (): Promise<Page<User>> => {
-  return fetchTimeout('/api/auth/logout', options('POST', undefined)).then(
-    manageResponse
-  )
-}
-
-/**
  * Get the user
  *
- * @return {*}  {Promise<Page<User>>}
+ * @return {*}  {Promise<Page<string>>}
  */
-const isLogged = async (): Promise<Page<User>> => {
+const isLogged = async (): Promise<Page<string>> => {
   return fetchTimeout('/api/auth/logged', options('GET', undefined)).then(
     manageResponse
   )
 }
 
-export { login, register, logout, isLogged }
+export { login, register, isLogged }

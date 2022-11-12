@@ -1,4 +1,5 @@
-import { writable } from 'svelte/store'
+import { get, writable } from 'svelte/store'
+import { decodeJwt } from 'jose'
 
 import { isLogged } from 'services/auth'
 import storage from './index'
@@ -8,8 +9,21 @@ const isLoggedIn = writable<boolean>(false)
 
 user.subscribe((data) => isLoggedIn.set(!!data))
 
-const check = () => {
-  isLogged().then((page) => user.set(page.data.id))
+const check = async (): Promise<void> => {
+  return isLogged()
+    .then((page) => user.set(page.data))
+    .catch((e) => {
+      user.set(null)
+      throw e
+    })
 }
 
-export { user, isLoggedIn, check }
+const getUser = () => {
+  const data = get(user)
+  if (!data) {
+    return null
+  }
+  return decodeJwt(data).user
+}
+
+export { user, isLoggedIn, check, getUser }

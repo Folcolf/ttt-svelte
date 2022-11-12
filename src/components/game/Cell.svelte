@@ -1,8 +1,8 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte'
-
-  import { user } from 'src/stores/auth'
   import { Button, Icon } from 'sveltestrap'
+
+  import { getUser } from 'src/stores/auth'
 
   export let id: string
   export let idx: number
@@ -13,7 +13,7 @@
 </script>
 
 <div class="cell">
-  {#if $user === id}
+  {#if getUser() === id}
     <Icon name="x-lg" class="success-text" />
   {:else if id === null}
     <Button class="inside" on:click={handleClick} color="link" />

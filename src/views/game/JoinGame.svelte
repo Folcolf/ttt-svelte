@@ -6,13 +6,14 @@
   import Card from 'components/card/Card.svelte'
   import Center from 'components/layout/Center.svelte'
   import { show } from 'stores/snackbar'
+  import { user } from 'stores/auth'
 
   const params = useParams()
   const navigate = useNavigate()
 
   let ready = false
 
-  const handlePlay = () => navigate('/game/' + $params.id + '/play')
+  const handlePlay = () => navigate(`/game/${$params.id}`)
 
   const handleInvite = () => {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
@@ -21,9 +22,10 @@
     }
   }
 
-  const sse = new EventSource(`/api/events/${$params.id}`)
+  const sse = new WebSocket(`ws://localhost/ws/events/${$params.id}`)
   sse.onopen = () => {
     show('info', 'Waiting for opponent')
+    sse.send($user)
   }
 
   sse.addEventListener('close', () => {
@@ -35,6 +37,7 @@
 
     if (readyState == EventSource.CLOSED) {
       show('danger', 'An error occurred while connecting to the server.')
+      navigate(-1)
     }
   }
 
@@ -44,19 +47,21 @@
 </script>
 
 <Center>
-  <Container class="text-center d-flex justify-center flex-row">
+  <div class="d-flex text-center justify-center flex-row">
     <Card title="Invite your friends to join">
-      <p>Create a game and invite your friends to join.</p>
-      <CardBody class="d-flex justify-center justify-space-around">
-        <Button class="info-color" on:click={handleInvite}>Invite</Button>
-        <Button
-          disabled={!ready}
-          class={ready && 'primary-color'}
-          on:click={handlePlay}
-        >
-          Play
-        </Button>
+      <CardBody class="d-flex flex-column justify-center justify-space-around">
+        <p>Create a game and invite your friends to join.</p>
+        <Container>
+          <Button class="info-color" on:click={handleInvite}>Invite</Button>
+          <Button
+            disabled={!ready}
+            class={ready && 'primary-color'}
+            on:click={handlePlay}
+          >
+            Play
+          </Button>
+        </Container>
       </CardBody>
     </Card>
-  </Container>
+  </div>
 </Center>

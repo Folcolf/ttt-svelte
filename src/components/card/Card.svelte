@@ -7,7 +7,7 @@
 
 <Card class="bg-light">
   <div class="pl-4 pr-4 pt-3 mb-3">
-    <p id="title" class="text-center h4 mb-2">{title}</p>
+    <p id="title" class="text-center h4 mb-2 px-3">{title}</p>
     <div class="underline-title bg-primary" />
     {#if subtitle}
       <br />
@@ -22,10 +22,9 @@
 <style lang="scss">
   #title {
     font-family: 'Raleway Thin', sans-serif;
-    letter-spacing: 4px;
+    letter-spacing: 3px;
     padding-bottom: 23px;
     padding-top: 13px;
-    text-align: center;
   }
 
   .underline-title {

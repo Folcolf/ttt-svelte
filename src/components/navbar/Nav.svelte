@@ -9,7 +9,7 @@
   const toggleNavigation = () => (active = !active)
 </script>
 
-<Navbar fixed={'top'} color={'primary'} container={false} class="p-2 gap-2">
+<Navbar sticky={'top'} color={'primary'} container={false} class="p-2 gap-2">
   <NavbarToggler on:click={toggleNavigation} class="pointer" color="primary" />
   <span
     aria-label="title"
